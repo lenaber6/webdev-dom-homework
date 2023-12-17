@@ -9,6 +9,7 @@
 
 <body>
     <div class="container">
+        <span class="alert">Подождите, пожалуйста, идёт загрузка данных!</span>
         <ul id="list" class="comments">
             <!-- Список рендерится из JS-->
         </ul>
@@ -44,35 +45,75 @@
     // Задание 2.12 - Асинхронность, API
     // Подключите приложение комментариев к API комментариев, в результате приложение должно 
     // получать список комментариев из API и добавлять новый комментарий через API.
-
+    // Задание 2.13 - Цепочки промисов.
+    // 1) переделайте все вызовы then на цепочки промисов, 
+    // 2) вынесите код получения списка комментариев в отдельную функцию, 
+    // 3) Используйте «замедление интернета» в консоли разработчика 
+    //    на вкладке сеть, чтобы отладить работу лоадеров,
+    // Результат: 1)  Я как пользователь при запуске приложения понимаю, 
+    //                что данные загружаются и мне нужно немного подождать.
+    //             2) Я как пользователь при добавлении комментария понимаю, 
+    //                что мне нужно подождать и не могу случайно отправить коммент
+    //                 повторно во время загрузки предыдущего.
 
     let studentsComments = [
         // {
         //     name: "Глеб Фокин",
         //     date: "12.02.22 12:18",
-        //     comment: "Это будет первый комментарий на этой странице",
+        //     text: "Это будет первый комментарий на этой странице",
         //     likes: 3,
         //     isLiked: true,
         // },
         // {
         //     name: "Варвара Н.",
         //     date: "13.02.22 19:22",
-        //     comment: "Мне нравится как оформлена эта страница! ❤",
+        //     text: "Мне нравится как оформлена эта страница! ❤",
         //     likes: 75,
         //     isLiked: false,
         // },
     ];
+    // 2.13: 1) переделайте все вызовы then на цепочки промисов, 
 
-    fetch("https://wedev-api.sky.pro/api/v1/elena-bersh/comments", {
-        method: "GET",
-    })
-        .then((response) => {
-            return response.json();
+    const fetchAndRenderComments = () => {
+
+        return fetch("https://wedev-api.sky.pro/api/v1/elena-bersh/comments", {
+            method: "GET",
         })
-        .then((responseData) => {
-            comments = responseData.comments;
-            renderStudentsComments();
-        });
+            .then((response) => {
+                console.log(response);
+                return response.json();
+            })
+            .then((responseData) => {
+                console.log(responseData);
+                let addComments = responseData.comments.map((comment) => {
+                    return {
+                        // Достаём имя автора
+                        name: comment.author.name,
+                        // Преобразуем дату-строку в Date
+                        date: new Date(comment.date),
+                        text: comment.text,
+                        // date: currentDate.toLocaleString('ru-RU', options),
+                        // date: formatDateTime(new Date()),
+                        likes: comment.likes,
+                        // в апи пока вообще нет признака лайкнутости
+                        // поэтому пока добавляем заглушку
+                        isLiked: false,
+                    };
+
+                });
+                // добавим таймер при получении данных с сервера
+                setTimeout(() => {
+                    // обратимся по дереву к span в начале html-кода через его класс и к его css,
+                    // где выключим отображение фразы, записанной в span
+                    // Через style мы обращаемся к css
+                    document.querySelector(".alert").style.display = 'none';
+                    studentsComments = addComments;
+                    console.log(addComments);
+                    renderStudentsComments();
+                }, 1000);
+            });
+    };
+    fetchAndRenderComments();
 
     // Постановка лайков
     const initLikeListeners = () => {
@@ -104,7 +145,7 @@
             commentsElement.addEventListener("click", () => {
                 const index = commentsElement.dataset.index;
                 //console.log(index);
-                const commentText = studentsComments[index].comment;
+                const commentText = studentsComments[index].text;
                 const commentAuthor = studentsComments[index].name;
                 //console.log(commentText, commentAuthor);
                 textAreaElement.value = `${commentText} > ${commentAuthor}`;
@@ -118,20 +159,20 @@
     // Рендер-функция отрисовывает новые комменты
     const renderStudentsComments = () => {
 
-        const studentsHtml = studentsComments.map((student, index) => {
+        const studentsHtml = studentsComments.map((comment, index) => {
             return `<li class="comment" data-index="${index}">
   <div class="comment-header">
-    <div>${student.name}</div>
-    <div>${student.date}</div>
+    <div>${comment.name}</div>
+    <div>${comment.date}</div>
   </div>
   <div class="comment-body">
     <div class="comment-text">
-      ${student.comment}
+      ${comment.text}
     </div>
   </div>
   <div class="comment-footer">
     <div class="likes">
-      <span class="likes-counter">${student.likes}</span>
+      <span class="likes-counter">${comment.likes}</span>
       <button class="like-button ${studentsComments[index].isLiked ? "-active-like" : ""}" data-index="${index}"></button>
     </div>
   </div>
@@ -142,77 +183,70 @@
         listElement.innerHTML = studentsHtml;
         initLikeListeners();
         initAnswerComments();
-    }
 
+    }
     renderStudentsComments();
 
 
     // Кнопка добавления комментов
-    buttonElement.addEventListener("click",
-        () => {
-            // const currentDate = new Date();
-            //const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-            // console.log(currentDate.toLocaleString('ru-RU', options));
-            // Подсветка ошибочных комментариев
-            inputElement.classList.remove("error");
-            textAreaElement.classList.remove("error");
+    buttonElement.addEventListener("click", () => {
+        // const currentDate = new Date();
+        //const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+        // console.log(currentDate.toLocaleString('ru-RU', options));
+        // Подсветка ошибочных комментариев
+        inputElement.classList.remove("error");
+        textAreaElement.classList.remove("error");
 
-            if (inputElement.value === '') {
-                inputElement.classList.add("error");
-                if (textAreaElement.value === '') {
-                    textAreaElement.classList.add("error");
-                    return;
-                };
+        if (inputElement.value === '') {
+            // const newError = new Error("Не вводите пустую строку");
+            // console.log(newError);
+            // если он в переменной, то можно с ним работать в коде, отображать в интерфейсе.
+            inputElement.classList.add("error");
+            if (textAreaElement.value === '') {
+                textAreaElement.classList.add("error");
                 return;
             };
-            const oldListHtml = listElement.innerHTML;
+            return;
+        };
+        // const oldListHtml = listElement.innerHTML;
 
-            studentsComments.push(
-                fetch("https://wedev-api.sky.pro/api/v1/elena-bersh/comments", {
-                    method: "POST",
-                    body: JSON.stringify({
-                        text: textAreaElement.value,
-                        name: inputElement.value,
-                    }),
+        //2.13 2) Я как пользователь при добавлении комментария понимаю, 
+        //   что мне нужно подождать и не могу случайно отправить коммент
+        //    повторно во время загрузки предыдущего.
+        buttonElement.disabled = true;
+        buttonElement.textContent = "Комментарий добавляется...";
+
+
+        // 2.13: 1) переделайте все вызовы then на цепочки промисов, 
+
+        studentsComments.push(
+            fetch("https://wedev-api.sky.pro/api/v1/elena-bersh/comments", {
+                method: "POST",
+                body: JSON.stringify({
+                    text: textAreaElement.value,
+                    name: inputElement.value,
+                }),
+            })
+                .then((response) => {
+                    return response.json();
                 })
-                    .then((response) => {
-                        return response.json();
-                    })
-                    .then((responseData) => {
-                        return fetch("https://wedev-api.sky.pro/api/v1/elena-bersh/comments", {
-                            method: "GET",
-                        })
-                        .then((response) => {
-                        console.log(response);
-                        return response.json();
-                    })
-                    .then((responseData) => {
-                        console.log(responseData);
-                        let addComments = responseData.comments.map((comment) => {
-                            return {
-                                // Достаём имя автора
-                                name: comment.author.name,
-                                // Преобразуем дату-строку в Date
-                                date: new Date(comment.date),
-                                text: comment.text,
-                                // date: currentDate.toLocaleString('ru-RU', options),
-                                // date: formatDateTime(new Date()),
-                                likes: comment.likes,
-                                // в апи пока вообще нет признака лайкнутости
-                                // поэтому пока добавляем заглушку
-                                isLiked: false,
-                            };
-                            comments = addComments;
-                        renderStudentsComments();
-                        });
-                    });
-                 })
-            );
+                .then(() => {
+                    buttonElement.disabled = false;
+                    buttonElement.textContent = "Написать";
+                    // 2.13: 2) вынесите код получения списка комментариев в отдельную функцию, 
+                })
+            // 2.13 2) Я как пользователь при добавлении комментария понимаю, 
+            // что мне нужно подождать и не могу случайно отправить коммент
+            // повторно во время загрузки предыдущего. Еле нашла, куда ставить кнопку!
 
-            renderStudentsComments();
-            inputElement.value = '';
-            textAreaElement.value = '';
-        });
+        );
+
+        fetchAndRenderComments();
+        // renderStudentsComments();
+        inputElement.value = '';
+        textAreaElement.value = '';
+    });
+
 
     //Ответы на комментарии. План:
     //1. При клике на комментарий в списке в форму подставляется текст комментария и имя автора комментария
@@ -222,7 +256,13 @@
     //  +  2. Написать в поле «Ваше комментарий» HTML-разметку, например `<h1> Коммент </h1>`.
     //   + 3. Нажать на кнопку «Написать».
     // Код писать здесь
-    console.log("It works!");
+    // console.log("It works!");
+    // А как добавить лоадер при загрузке приложения?
+    // Можно создать переменную, которая будет хранить статус загрузки приложения.
+    //  Можно вызвать рендер, и если переменная равна true, то можно показать этот лоадер.
+    //  После первой загрузки комментариев нужно изменить значение переменной на противоположное.
+    //  В функции получения комментариев снова вызывается рендер-функция — переменная уже будет
+    //  все время с другим значением и на экране не появится до перезагрузки страницы.
 </script>
 
 </html>
