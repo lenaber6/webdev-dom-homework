@@ -1,7 +1,9 @@
 import { login, setToken, token } from "./api.js";
+import { fetchAndRenderComments } from "./main.js";
+// import { renderStudentsComments } from "./renderStudentsComments.js";
 
-export const renderLogin = ({ fetchAndRenderComments }) => {
-    const appElement = document.getElementById("app");
+export const renderLogin = () => {
+    const logElement = document.getElementById("app");
     const loginHtml = `
     <div class="container">
     <div class="add-form">
@@ -18,11 +20,11 @@ export const renderLogin = ({ fetchAndRenderComments }) => {
       <br />
       <button class="add-form-login-button" id="login-button">Войти</button>
       <br />
-      <a href="index.html" class="link">Зарегистрироваться</a>
+      <a href="registration.html" class="link">Зарегистрироваться</a>
     </div>
     </div>
     `;
-    appElement.innerHTML = loginHtml;
+    logElement.innerHTML = loginHtml;
 
     const loginButtonElement = document.getElementById("login-button");
     const loginInputElement = document.getElementById("login-input");
@@ -43,3 +45,4 @@ export const renderLogin = ({ fetchAndRenderComments }) => {
             });
     });
 };
+renderLogin();

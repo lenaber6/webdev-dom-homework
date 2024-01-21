@@ -17,6 +17,7 @@ const fetchAndRenderComments = () => {
             console.log(responseData);
             const addComments = responseData.comments.map((comment) => {
                 return {
+                    id: comment.id,
                     // Достаём имя автора
                     name: comment.author.name,
                     // Преобразуем дату-строку в Date

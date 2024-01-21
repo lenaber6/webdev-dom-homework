@@ -145,6 +145,9 @@ body {
 .link-authorization {
     text-decoration: underline;
     color: aliceblue;
+    background-color: transparent;
+    font-size: 16px;
+    border: none;
 }
 .input {
     display: flex;
