@@ -7,7 +7,7 @@
         "dev": "webpack --mode development --watch",
         "format": "prettier --write ./modules/",
         "lint:js": "eslint ./modules/**/*.js",
-        "lint:css": "stylelint .css",
+        "lint:css": "stylelint './**/*.css'",
         "stylelint": "stylelint '**/*{.css,.scss}'",
         "stylelint:fix": "stylelint '**/*{.css,.scss}' --fix",
         "lint": "npm run lint:js && npm run lint:css",
@@ -27,7 +27,6 @@
         "eslint": "^8.56.0",
         "lodash": "^4.17.21",
         "stylelint": "^16.1.0",
-        "stylelint-config-standard": "^36.0.0",
         "stylelint-order": "^6.0.4",
         "stylelint-prettier": "^5.0.0"
     },
@@ -41,13 +40,12 @@
     },
     "husky": {
         "hooks": {
-          "pre-commit": "lint-staged"
+            "pre-commit": "lint-staged"
         }
-      },
-      "lint-staged": {
+    },
+    "lint-staged": {
         "*.(css|scss)": [
-          "stylelint --fix"
+            "stylelint --fix"
         ]
-      }
+    }
 }
-

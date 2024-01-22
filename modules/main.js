@@ -1,9 +1,9 @@
 //"use strict"; Модули по умолчанию работают в строгом режиме,
 // писать use strict в начале не нужно.
-import { getTodos } from "./api.js";
+import { getTodos, setToken } from "./api.js";
 import { renderStudentsComments } from "./renderStudentsComments.js";
-import { renderRegistration } from "./renderRegistration.js";
-import { renderLogin } from "./renderLogin.js";
+// import { renderRegistration } from "./renderRegistration.js";
+// import { renderLogin } from "./renderLogin.js";
 //import { formatDateTime } from "./date.js";
 //import { addCommentButton } from "./renderStudentsComments.js";
 export { studentsComments, fetchAndRenderComments };
@@ -11,8 +11,8 @@ export { studentsComments, fetchAndRenderComments };
 let studentsComments = [];
 console.log(6);
 
-const fetchAndRenderComments = () => {
-    getTodos()
+const fetchAndRenderComments = (studentsComments) => {
+    getTodos({ token: setToken })
         .then((responseData) => {
             console.log(responseData);
             const addComments = responseData.comments.map((comment) => {
@@ -38,12 +38,9 @@ const fetchAndRenderComments = () => {
             //document.querySelector(".wait").style.display = 'none';
             studentsComments = addComments;
             //console.log(addComments);
-            renderStudentsComments({
-                studentsComments,
-                fetchAndRenderComments,
-            });
-            renderRegistration();
-            renderLogin();
+            renderStudentsComments(studentsComments);
+            // renderRegistration();
+            // renderLogin();
             // }, 1000);
         })
         .catch((error) => {

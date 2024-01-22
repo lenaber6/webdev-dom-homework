@@ -42,9 +42,7 @@ export const renderRegistration = () => {
             console.log(responseData.user.name);
             console.log(token);
         });
-        // .then(() => {
-        //     fetchAndRenderComments();
-        // });
+        //.then(() => {});
     });
 };
 renderRegistration();
