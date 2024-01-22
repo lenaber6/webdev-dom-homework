@@ -41,7 +41,7 @@ export const renderStudentsComments = ({
 </li>`;
         })
         .join("");
-    appElement.innerHTML = studentsHtml;
+    // appElement.innerHTML = studentsHtml;
     const appHtml = `
   <div class="container" id="add-container">
         <!--<span class="wait">Подождите, пожалуйста, идёт загрузка данных!</span>-->
