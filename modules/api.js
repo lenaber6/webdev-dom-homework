@@ -55,7 +55,7 @@ export function postTodo({ text, name }) {
             alert(
                 "Вы ввели меньше трёх символов в поле ввода имени или комментария. Введите, пожалуйста, заново.",
             );
-            throw new Error("Имя или комментарий короче 3х символов");
+            throw new Error("Имя или комментарий короче трёх символов");
         }
     });
 }
@@ -89,7 +89,7 @@ export function registration({ name, login, password }) {
         if (response.status === 201) {
             return response.json();
         } else if (response.status === 400) {
-            alert("Пользователь с таким логином уже существует");
+            alert("К сожалению, пользователь с таким логином уже существует");
             throw new Error("Сервер сломался");
         }
     });
