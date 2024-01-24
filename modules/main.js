@@ -6,12 +6,12 @@ import { renderStudentsComments } from "./renderStudentsComments.js";
 // import { renderLogin } from "./renderLogin.js";
 //import { formatDateTime } from "./date.js";
 //import { addCommentButton } from "./renderStudentsComments.js";
-export { studentsComments, fetchAndRenderComments };
+//export { studentsComments, fetchAndRenderComments };
 
-let studentsComments = [];
+export let studentsComments = [];
 console.log(6);
 
-const fetchAndRenderComments = (studentsComments) => {
+export const fetchAndRenderComments = (studentsComments) => {
     getTodos({ token: setToken })
         .then((responseData) => {
             console.log(responseData);
@@ -38,7 +38,7 @@ const fetchAndRenderComments = (studentsComments) => {
             //document.querySelector(".wait").style.display = 'none';
             studentsComments = addComments;
             //console.log(addComments);
-            renderStudentsComments(studentsComments);
+            renderStudentsComments({ studentsComments });
             // renderRegistration();
             // renderLogin();
             // }, 1000);

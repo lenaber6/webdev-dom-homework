@@ -20,7 +20,8 @@ export const renderStudentsComments = ({
                 new Date(comment.date),
                 "yyyy-MM-dd hh.mm.ss",
             );
-            return `<li class="comment" data-index="${index}">
+            return `
+            <li class="comment" data-index="${index}">
 <div class="comment-header">
 <div>${comment.name}</div>
 <div>${creatDate}</div>
@@ -46,7 +47,7 @@ export const renderStudentsComments = ({
   <div class="container" id="add-container">
         <!--<span class="wait">Подождите, пожалуйста, идёт загрузка данных!</span>-->
         <ul id="list" class="comments">${studentsHtml}</ul>
-       <div class="add-form  ${
+       <div class="add-form">  ${
            user
                ? `<input id="add-name" type="text" class="add-form-name" placeholder="Введите ваше имя" value="${user?.name}" readonly />
         <textarea id="add-text" value="" type="textarea" class="add-form-text" placeholder="Введите ваш коментарий"
@@ -54,27 +55,33 @@ export const renderStudentsComments = ({
         <div class="add-form-row">
             <button id="button-add" class="add-form-button">Написать</button> 
         </div>
-    </div>`
+    </div>
+  </div>`
                : `
     <p>Чтобы добавить комментарий, <a  id= "button-authorization" class="link-authorization">авторизуйтесь</a></p>
 `
-       }">
-    </div>`;
+       }
+    `;
     appElement.innerHTML = appHtml;
     const buttonAuthorizationElement = document.getElementById(
         "button-authorization",
     );
-    buttonAuthorizationElement.addEventListener("click", (event) => {
-        event.preventDefault();
-        console.log("click");
-        renderLogin();
-    });
+    if (buttonAuthorizationElement) {
+        buttonAuthorizationElement.addEventListener("click", (event) => {
+            event.preventDefault();
+            console.log("click");
+            renderLogin();
+        });
+    }
     const textAreaElement = document.getElementById("add-text");
     const inputElement = document.getElementById("add-name");
 
     // eslint-disable-next-line no-inner-declarations
     function addCommentButton() {
         const buttonElement = document.getElementById("button-add");
+        if (!buttonElement) {
+            return;
+        }
         buttonElement.addEventListener("click", () => {
             console.log(4);
             // Подсветка ошибочных комментариев
@@ -122,6 +129,6 @@ export const renderStudentsComments = ({
         });
     }
     addCommentButton();
+    initLikeListeners();
+    initAnswerComments();
 };
-initLikeListeners();
-initAnswerComments();
