@@ -47,9 +47,9 @@ export const renderStudentsComments = ({
   <div class="container" id="add-container">
         <!--<span class="wait">Подождите, пожалуйста, идёт загрузка данных!</span>-->
         <ul id="list" class="comments">${studentsHtml}</ul>
-       <div class="add-form">  ${
-           user
-               ? `<input id="add-name" type="text" class="add-form-name" placeholder="Введите ваше имя" value="${user?.name}" readonly />
+        ${
+            user
+                ? ` <div class="add-form"><input id="add-name" type="text" class="add-form-name" placeholder="Введите ваше имя" value="${user?.name}" readonly />
         <textarea id="add-text" value="" type="textarea" class="add-form-text" placeholder="Введите ваш коментарий"
             rows="4"></textarea>
         <div class="add-form-row">
@@ -57,10 +57,10 @@ export const renderStudentsComments = ({
         </div>
     </div>
   </div>`
-               : `
+                : `
     <p>Чтобы добавить комментарий, <a  id= "button-authorization" class="link-authorization">авторизуйтесь</a></p>
 `
-       }
+        }
     `;
     appElement.innerHTML = appHtml;
     const buttonAuthorizationElement = document.getElementById(

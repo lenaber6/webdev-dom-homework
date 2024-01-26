@@ -1,4 +1,4 @@
-import { login, setToken, token } from "./api.js";
+import { login, setToken, token, setUser } from "./api.js";
 import { fetchAndRenderComments } from "./main.js";
 // import { renderStudentsComments } from "./renderStudentsComments.js";
 
@@ -38,6 +38,7 @@ export const renderLogin = () => {
             .then((responseData) => {
                 console.log(token);
                 setToken(responseData.user.token);
+                setUser(responseData.user);
                 console.log(token);
             })
             .then(() => {
