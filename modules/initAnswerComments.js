@@ -8,7 +8,7 @@ export const initAnswerComments = () => {
     for (const commentsElement of commentsElements) {
         commentsElement.addEventListener("click", () => {
             const index = commentsElement.dataset.index;
-            //console.log(index);
+            console.log(index);
             const commentText = studentsComments[index].text;
             const commentAuthor = studentsComments[index].name;
             //console.log(commentText, commentAuthor);

@@ -11,7 +11,7 @@ import { renderStudentsComments } from "./renderStudentsComments.js";
 export let studentsComments = [];
 console.log(6);
 
-export const fetchAndRenderComments = (studentsComments) => {
+export const fetchAndRenderComments = () => {
     getTodos({ token: setToken })
         .then((responseData) => {
             console.log(responseData);
@@ -50,10 +50,6 @@ export const fetchAndRenderComments = (studentsComments) => {
 };
 //1 шаг
 fetchAndRenderComments();
-//renderRegistration({ fetchAndRenderComments });
-// renderLogin({fetchAndRenderComments});
-// renderStudentsComments({studentsComments, fetchAndRenderComments});
-//addCommentButton();
 
 // 2.17 Подключите библиотеку date-fns к вашему приложению. С ее помощью отформатируйте дату в формате
 // yyyy-MM-dd hh.mm.ss

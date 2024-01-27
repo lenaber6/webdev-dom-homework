@@ -1,6 +1,5 @@
 import { login, setToken, token, setUser } from "./api.js";
 import { fetchAndRenderComments } from "./main.js";
-// import { renderStudentsComments } from "./renderStudentsComments.js";
 
 export const renderLogin = () => {
     const logElement = document.getElementById("app");

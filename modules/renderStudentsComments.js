@@ -3,7 +3,6 @@ import { initAnswerComments } from "./initAnswerComments.js";
 import { format } from "date-fns";
 import { postTodo, user } from "./api.js";
 import { renderLogin } from "./renderLogin.js";
-//import { studentsComments } from "./main.js";
 //import { fetchAndRenderComments } from "./main.js";
 
 const now = new Date();
@@ -42,7 +41,6 @@ export const renderStudentsComments = ({
 </li>`;
         })
         .join("");
-    // appElement.innerHTML = studentsHtml;
     const appHtml = `
   <div class="container" id="add-container">
         <!--<span class="wait">Подождите, пожалуйста, идёт загрузка данных!</span>-->
@@ -123,12 +121,9 @@ export const renderStudentsComments = ({
                     buttonElement.textContent = "Написать";
                     console.warn(error);
                 });
-
-            // fetchAndRenderComments();
-            // renderStudentsComments({ studentsComments, fetchAndRenderComments });
         });
     }
     addCommentButton();
-    initLikeListeners();
-    initAnswerComments();
 };
+initLikeListeners();
+initAnswerComments();
