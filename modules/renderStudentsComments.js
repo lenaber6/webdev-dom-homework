@@ -127,3 +127,4 @@ export const renderStudentsComments = ({
 };
 initLikeListeners();
 initAnswerComments();
+//fetchAndRenderComments();
