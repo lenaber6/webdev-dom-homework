@@ -124,7 +124,8 @@ export const renderStudentsComments = ({
         });
     }
     addCommentButton();
+    initLikeListeners();
+    initAnswerComments();
 };
-initLikeListeners();
-initAnswerComments();
+
 //fetchAndRenderComments();

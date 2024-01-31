@@ -9,7 +9,6 @@ import { renderStudentsComments } from "./renderStudentsComments.js";
 //export { studentsComments, fetchAndRenderComments };
 
 export let studentsComments = [];
-console.log(6);
 
 export const fetchAndRenderComments = () => {
     getTodos({ token: setToken })
@@ -38,7 +37,10 @@ export const fetchAndRenderComments = () => {
             //document.querySelector(".wait").style.display = 'none';
             studentsComments = addComments;
             //console.log(addComments);
-            renderStudentsComments({ studentsComments });
+            renderStudentsComments({
+                studentsComments,
+                fetchAndRenderComments,
+            });
             // renderRegistration();
             // renderLogin();
             // }, 1000);
