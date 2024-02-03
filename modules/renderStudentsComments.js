@@ -3,7 +3,6 @@ import { initAnswerComments } from "./initAnswerComments.js";
 import { format } from "date-fns";
 import { postTodo, user } from "./api.js";
 import { renderLogin } from "./renderLogin.js";
-//import { fetchAndRenderComments } from "./main.js";
 
 const now = new Date();
 format(now, "yyyy-MM-dd hh.mm.ss");
@@ -31,13 +30,24 @@ export const renderStudentsComments = ({
 </div>
 </div>
 <div class="comment-footer">
+${
+    user
+        ? `
 <div class="likes">
   <span class="likes-counter">${comment.likes}</span>
   <button class="like-button ${
       studentsComments[index].isLiked ? "-active-like" : ""
   }" data-index="${index}"></button>
+</div>`
+        : `
+<div class="likes">
+  <span class="likes-counter"></span>
+  <button class="like-button" data-index="${index}"></button>
 </div>
+`
+}
 </div>
+
 </li>`;
         })
         .join("");
@@ -101,7 +111,9 @@ export const renderStudentsComments = ({
             buttonElement.textContent = "Комментарий добавляется...";
 
             postTodo({
-                text: textAreaElement.value,
+                text: textAreaElement.value
+                    .replaceAll("<", "&lt;")
+                    .replaceAll(">", "&gt;"),
                 name: inputElement.value,
             })
                 .then(() => {
