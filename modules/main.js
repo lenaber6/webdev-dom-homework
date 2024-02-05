@@ -2,11 +2,6 @@
 // писать use strict в начале не нужно.
 import { getTodos, setToken } from "./api.js";
 import { renderStudentsComments } from "./renderStudentsComments.js";
-// import { renderRegistration } from "./renderRegistration.js";
-// import { renderLogin } from "./renderLogin.js";
-//import { formatDateTime } from "./date.js";
-//import { addCommentButton } from "./renderStudentsComments.js";
-//export { studentsComments, fetchAndRenderComments };
 
 export let studentsComments = [];
 

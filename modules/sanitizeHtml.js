@@ -1,10 +1,7 @@
 /* eslint-disable prettier/prettier */
 export const sanitizeHtml = (htmlString) => {
-    return 
-    // eslint-disable-next-line prettier/prettier, no-unreachable
-        htmlString
+    return htmlString // нельзя разделять return и htmlString, иначе эта ф-ция не вернёт ничего и дальнейший код не выполнится
         .replaceAll("<", "&lt;")
-        // eslint-disable-next-line prettier/prettier
         .replaceAll(">", "&gt;")
         .replaceAll("&", "&amp;");
 };

@@ -3,6 +3,7 @@ import { initAnswerComments } from "./initAnswerComments.js";
 import { format } from "date-fns";
 import { postTodo, user } from "./api.js";
 import { renderLogin } from "./renderLogin.js";
+import { sanitizeHtml } from "./sanitizeHtml.js";
 
 const now = new Date();
 format(now, "yyyy-MM-dd hh.mm.ss");
@@ -91,7 +92,7 @@ ${
             return;
         }
         buttonElement.addEventListener("click", () => {
-            console.log(4);
+            //console.log(4);
             // Подсветка ошибочных комментариев
             inputElement.classList.remove("error");
             textAreaElement.classList.remove("error");
@@ -110,12 +111,10 @@ ${
             buttonElement.disabled = true;
             buttonElement.textContent = "Комментарий добавляется...";
 
-            postTodo({
-                text: textAreaElement.value
-                    .replaceAll("<", "&lt;")
-                    .replaceAll(">", "&gt;"),
-                name: inputElement.value,
-            })
+            postTodo(
+                sanitizeHtml(textAreaElement.value),
+                sanitizeHtml(inputElement.value),
+            )
                 .then(() => {
                     fetchAndRenderComments();
                 })

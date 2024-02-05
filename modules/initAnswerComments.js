@@ -1,4 +1,4 @@
-//import { studentsComments } from "./main.js";
+import { studentsComments } from "./main.js";
 //import { text, name } from "./renderStudentsComments.js";
 const textAreaElement = document.getElementById("add-text");
 
@@ -8,7 +8,8 @@ export const initAnswerComments = () => {
     const commentsElements = document.querySelectorAll(".comment");
     // console.log(commentsElements);
     for (const commentsElement of commentsElements) {
-        commentsElement.addEventListener("click", (studentsComments) => {
+        commentsElement.addEventListener("click", () => {
+            console.log(studentsComments);
             const index = commentsElement.dataset.index;
             console.log(index);
             const commentText = studentsComments[index].text;
