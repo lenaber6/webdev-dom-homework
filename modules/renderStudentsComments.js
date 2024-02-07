@@ -111,10 +111,10 @@ ${
             buttonElement.disabled = true;
             buttonElement.textContent = "Комментарий добавляется...";
 
-            postTodo(
-                sanitizeHtml(textAreaElement.value),
-                sanitizeHtml(inputElement.value),
-            )
+            postTodo({
+                name: sanitizeHtml(inputElement.value),
+                text: sanitizeHtml(textAreaElement.value),
+            })
                 .then(() => {
                     fetchAndRenderComments();
                 })
