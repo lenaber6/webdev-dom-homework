@@ -2,16 +2,10 @@
 // писать use strict в начале не нужно.
 import { getTodos, setToken } from "./api.js";
 import { renderStudentsComments } from "./renderStudentsComments.js";
-// import { renderRegistration } from "./renderRegistration.js";
-// import { renderLogin } from "./renderLogin.js";
-//import { formatDateTime } from "./date.js";
-//import { addCommentButton } from "./renderStudentsComments.js";
-export { studentsComments, fetchAndRenderComments };
 
-let studentsComments = [];
-console.log(6);
+export let studentsComments = [];
 
-const fetchAndRenderComments = (studentsComments) => {
+export const fetchAndRenderComments = () => {
     getTodos({ token: setToken })
         .then((responseData) => {
             console.log(responseData);
@@ -38,7 +32,10 @@ const fetchAndRenderComments = (studentsComments) => {
             //document.querySelector(".wait").style.display = 'none';
             studentsComments = addComments;
             //console.log(addComments);
-            renderStudentsComments(studentsComments);
+            renderStudentsComments({
+                studentsComments,
+                fetchAndRenderComments,
+            });
             // renderRegistration();
             // renderLogin();
             // }, 1000);
@@ -50,10 +47,6 @@ const fetchAndRenderComments = (studentsComments) => {
 };
 //1 шаг
 fetchAndRenderComments();
-//renderRegistration({ fetchAndRenderComments });
-// renderLogin({fetchAndRenderComments});
-// renderStudentsComments({studentsComments, fetchAndRenderComments});
-//addCommentButton();
 
 // 2.17 Подключите библиотеку date-fns к вашему приложению. С ее помощью отформатируйте дату в формате
 // yyyy-MM-dd hh.mm.ss
