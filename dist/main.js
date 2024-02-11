@@ -76,7 +76,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   sanitizeHtml: () => (/* binding */ sanitizeHtml)\n/* harmony export */ });\n/* eslint-disable prettier/prettier */\r\nconst sanitizeHtml = (htmlString) => {\r\n    return htmlString // нельзя разделять return и htmlString, иначе эта ф-ция не вернёт ничего и дальнейший код не выполнится\r\n        .replaceAll(\"<\", \"&lt;\")\r\n        .replaceAll(\">\", \"&gt;\")\r\n        .replaceAll(\"&\", \"&amp;\");\r\n};\r\n\n\n//# sourceURL=webpack://webdev-dom-homework/./modules/sanitizeHtml.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   sanitizeHtml: () => (/* binding */ sanitizeHtml)\n/* harmony export */ });\n/* eslint-disable prettier/prettier */\r\nconst sanitizeHtml = (htmlString) => {\r\n    return htmlString // нельзя разделять return и htmlString, иначе эта ф-ция не вернёт ничего и дальнейший код не выполнится\r\n        .replaceAll(\"&\", \"&amp;\")\r\n        .replaceAll(\"<\", \"&lt;\")\r\n        .replaceAll(\">\", \"&gt;\")\r\n};\r\n\n\n//# sourceURL=webpack://webdev-dom-homework/./modules/sanitizeHtml.js?");
 
 /***/ }),
 
