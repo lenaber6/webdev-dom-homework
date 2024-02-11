@@ -1,10 +1,10 @@
 import { studentsComments } from "./main.js";
 //import { text, name } from "./renderStudentsComments.js";
-const textAreaElement = document.getElementById("add-text");
 
 //Цитируем комментарий в форму
 export const initAnswerComments = () => {
     //console.log(8);
+    const textAreaElement = document.getElementById("add-text");
     const commentsElements = document.querySelectorAll(".comment");
     // console.log(commentsElements);
     for (const commentsElement of commentsElements) {
