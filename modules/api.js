@@ -2,13 +2,13 @@ export let token;
 export const setToken = (newToken) => {
     token = newToken;
 };
-export let name;
-export const setName = (newName) => {
-    name = newName;
+export let user;
+export const setUser = (newUser) => {
+    user = newUser;
 };
 const host = "https://wedev-api.sky.pro/api/v2/elena-bersh/comments";
 const userURL = "https://wedev-api.sky.pro/api/user/login";
-const newUser = "https://wedev-api.sky.pro/api/user";
+const newUserURL = "https://wedev-api.sky.pro/api/user";
 
 //2 шаг
 export function getTodos() {
@@ -55,7 +55,7 @@ export function postTodo({ text, name }) {
             alert(
                 "Вы ввели меньше трёх символов в поле ввода имени или комментария. Введите, пожалуйста, заново.",
             );
-            throw new Error("Имя или комментарий короче 3х символов");
+            throw new Error("Имя или комментарий короче трёх символов");
         }
     });
 }
@@ -70,13 +70,15 @@ export function login({ login, password }) {
         if (response.status === 201) {
             return response.json();
         } else if (response.status === 400) {
-            alert("Введён неверный логин или пароль");
+            alert(
+                "Введён неверный логин или пароль, или Вам нужно зарегистрироваться",
+            );
             throw new Error("Сервер сломался");
         }
     });
 }
 export function registration({ name, login, password }) {
-    return fetch(newUser, {
+    return fetch(newUserURL, {
         method: "POST",
         body: JSON.stringify({
             name,
@@ -87,7 +89,7 @@ export function registration({ name, login, password }) {
         if (response.status === 201) {
             return response.json();
         } else if (response.status === 400) {
-            alert("Пользователь с таким логином уже существует");
+            alert("К сожалению, пользователь с таким логином уже существует");
             throw new Error("Сервер сломался");
         }
     });
